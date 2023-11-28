@@ -8,6 +8,7 @@ import GlobalContextProvider from "@/context";
 import { getCurrentUser } from "@/utils/getData";
 import BottomBar from "@/components/layouts/BottomBar";
 import { Toaster } from "react-hot-toast";
+import Provider from "@/utils/Provider";
 import "linkify-plugin-mention";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
@@ -47,10 +48,12 @@ export default async function RootLayout({
       <body className={`${poppins.className} md:flex justify-center`}>
         {userId && <LeftSideBar user={currentUser} />}
         <main className="space-y-3 relative w-full md:max-w-xl px-3 md:px-4">
-          <GlobalContextProvider>
-            {children}
-            {userId && <BottomBar user={currentUser} />}
-          </GlobalContextProvider>
+          <Provider>
+            <GlobalContextProvider>
+              {children}
+              {userId && <BottomBar user={currentUser} />}
+            </GlobalContextProvider>
+          </Provider>
           <Toaster position="bottom-center" />
         </main>
         {userId && <RightSideBar />}

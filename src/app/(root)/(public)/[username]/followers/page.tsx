@@ -6,7 +6,6 @@ import useCookies from "@/hooks/useCookies";
 import type { UserData } from "@/types";
 import { getUserByUsername } from "@/utils/getData";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { TbCircleCheckFilled } from "react-icons/tb";
 
 interface Params {
@@ -17,8 +16,6 @@ interface Params {
 
 const FollowersPage = async ({ params: { username } }: Params) => {
   const { userId } = useCookies();
-  if (!userId) redirect("/login");
-
   const { user } = await getUserByUsername(username);
 
   return (
@@ -29,7 +26,7 @@ const FollowersPage = async ({ params: { username } }: Params) => {
       </header>
 
       {user.followers.length > 0 ? (
-        <section className="space-y-3">
+        <section className="space-y-3 max-md:pb-20 pb-4">
           {user.followers.map((user: UserData, i) => (
             <Adiv
               key={i}
@@ -51,7 +48,11 @@ const FollowersPage = async ({ params: { username } }: Params) => {
                       />
                     )}
                   </div>
-                  {user.name && <p className="text-gray-500">{user.name}</p>}
+                  {user.name && (
+                    <p className="text-gray-500 dark:text-gray-400">
+                      {user.name}
+                    </p>
+                  )}
                 </div>
               </Link>
 

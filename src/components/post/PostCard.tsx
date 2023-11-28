@@ -106,18 +106,19 @@ const Body = ({
 }) => {
   return (
     <div className="space-y-2 w-fit">
-      <Linkify
-        className="whitespace-pre-line"
-        as="p"
-        options={{
-          render: RenderLink,
-          defaultProtocol: "https",
-          formatHref: {
-            mention: (href) => "/@" + href.slice(1),
-          },
-        }}>
-        {children}
-      </Linkify>
+      <p className="whitespace-pre-line">
+        <Linkify
+          as="span"
+          options={{
+            render: RenderLink,
+            defaultProtocol: "https",
+            formatHref: {
+              mention: (href) => "/@" + href.slice(1),
+            },
+          }}>
+          {children}
+        </Linkify>
+      </p>
 
       {postImage?.src && (
         <PostImage
@@ -161,12 +162,7 @@ const Footer = ({
         {totalComments > 0 && <p>{FormatNumber(totalComments)}</p>}
       </Link>
 
-      <LikeButton
-        userId={userId}
-        postId={post._id}
-        likes={post.likes}
-        username={currentUser ?? ""}
-      />
+      <LikeButton userId={userId} postId={post._id} likes={post.likes} />
     </div>
   );
 };
